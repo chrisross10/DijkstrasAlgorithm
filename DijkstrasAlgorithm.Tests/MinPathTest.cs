@@ -13,18 +13,9 @@ namespace DijkstrasAlgorithm.Tests
 
         private void AssertMinPath(string graph, int length, string path)
         {
-            Assert.That(MinLength(graph, "A", "Z"), Is.EqualTo(length));
-            Assert.That(MinPath(graph, "A", "Z"), Is.EqualTo(path));
-        }
-
-        private int MinLength(string graph, string begin, string end)
-        {
-            return 0;
-        }
-
-        private string MinPath(string graph, string begin, string end)
-        {
-            return "{}";
+            var pf = new PathFinder(graph);
+            Assert.That(pf.MinLength("A", "Z"), Is.EqualTo(length));
+            Assert.That(pf.MinPath("A", "Z"), Is.EqualTo(path));
         }
     }
 }
