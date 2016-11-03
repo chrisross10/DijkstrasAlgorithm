@@ -8,10 +8,15 @@ namespace DijkstrasAlgorithm.Tests
         [Test]
         public void NoGraph_NoPathZeroLength()
         {
-            Assert.That(MinPath(""), Is.EqualTo("{}0"));
+            AssertPath("", "{}0");
         }
 
-        private string MinPath(string graph)
+        private void AssertPath(string graph, string expected)
+        {
+            Assert.That(MinPath(graph, "A", "Z"), Is.EqualTo(expected));
+        }
+
+        private string MinPath(string graph, string begin, string end)
         {
             return "{}0";
         }
