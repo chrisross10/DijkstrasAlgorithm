@@ -10,41 +10,51 @@ namespace DijkstrasAlgorithm.Tests
         [Test]
         public void NoGraph_NoPathZeroLength()
         {
-            AssertMinPath("", 0, "{}");     // empty graph
-            AssertMinPath("A", 0, "{}");    // one node
-            AssertMinPath("BC1", 0, "{}");  // no start or end
-            AssertMinPath("AC1", 0, "{}");  // no end
-            AssertMinPath("BZ1", 0, "{}");  // no start
+            AssertMinPath("", 0, "[]");     // empty graph
+            AssertMinPath("A", 0, "[]");    // one node
+            AssertMinPath("BC1", 0, "[]");  // no start or end
+            AssertMinPath("AC1", 0, "[]");  // no end
+            AssertMinPath("BZ1", 0, "[]");  // no start
         }
 
         [Test]
         public void OneEdge()
         {
-            AssertMinPath("AZ1", 1, ANY);
+            AssertMinPath("AZ1", 1, "[A, Z]");
+            AssertMinPath("AZ2", 2, "[A, Z]");
         }
 
-        private string ANY = null;
+        [Test]
+        public void TwoEdges()
+        {
+            AssertMinPath("AB1,BZ1", 2, "[A, B, Z]");
+        }
 
         private void AssertMinPath(string graph, int length, string path)
         {
             var pf = MakePathFinder(graph);
             if (length > 0)
-                Assert.That(pf.MinLength("A", "Z"), Is.EqualTo(length));
+                Assert.That(pf.GetLength(), Is.EqualTo(length));
             if (!string.IsNullOrEmpty(path))
-                Assert.That(pf.MinPath("A", "Z"), Is.EqualTo(path));
+                Assert.That(pf.GetPath(), Is.EqualTo(path));
         }
 
         private PathFinder MakePathFinder(string graph)
         {
             var pf = new PathFinder();
             var edgePattern = new Regex("(\\D+)(\\D+)(\\d+)");
-            if (edgePattern.IsMatch(graph))
+            var edges = graph.Split(',');
+            foreach (var edge in edges)
             {
-                var begin = edgePattern.Replace(graph, "$1");
-                var end = edgePattern.Replace(graph, "$2");
-                var length = int.Parse(edgePattern.Replace(graph, "$3"));
-                pf.AddEdge(begin, end, length);
+                if (edgePattern.IsMatch(edge))
+                {
+                    var begin = edgePattern.Replace(edge, "$1");
+                    var end = edgePattern.Replace(edge, "$2");
+                    var length = int.Parse(edgePattern.Replace(edge, "$3"));
+                    pf.AddEdge(begin, end, length);
+                }
             }
+            pf.FindPath("A", "Z");
             return pf;
         }
     }

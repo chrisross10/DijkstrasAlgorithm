@@ -1,25 +1,65 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace DijkstrasAlgorithm
 {
     public class PathFinder
     {
-        private List<Edge> _edges = new List<Edge>();
+        private readonly List<Edge> _edges = new List<Edge>();
+        private List<string> _path = new List<string>();
+        private int _length;
 
-        public int MinLength(string begin, string end)
+        public void FindPath(string begin, string end)
         {
-            return _edges.Where(e => e.Begin.Equals(begin) && e.End.Equals(end)).Sum(e => e.Length);
+            List<string> p = new List<string>();
+            int l = 0;
+            p.Add(begin);
+
+            for (Edge e = FindEdge(begin); e != null; e = FindEdge(e.End))
+            {
+                p.Add(e.End);
+                l += e.Length;
+                if (e.End.Equals(end))
+                {
+                    _length = l;
+                    _path = p;
+                    return;
+                }
+            }
         }
 
-        public string MinPath(string begin, string end)
+        private Edge FindEdge(string begin)
         {
-            return "{}";
+            foreach (var e in _edges)
+            {
+                if (e.Begin.Equals(begin))
+                    return e;
+            }
+            return null;
         }
 
         public void AddEdge(string begin, string end, int length)
         {
             _edges.Add(new Edge(begin, end, length));
+        }
+
+        public int GetLength()
+        {
+            return _length;
+        }
+
+        public string GetPath()
+        {
+            var sb = new StringBuilder();
+            sb.Append("[");
+            foreach (var p in _path)
+            {
+                sb.AppendFormat("{0}, ", p);
+            }
+            sb.Append("]");
+            sb.Replace(", ]", "]");
+            return sb.ToString();
         }
 
         private class Edge
