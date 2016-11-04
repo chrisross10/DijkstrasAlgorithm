@@ -32,6 +32,13 @@ namespace DijkstrasAlgorithm.Tests
             AssertMinPath("AX1,YZ1", 0, "[]");
         }
 
+        [Test]
+        public void ThreeEdges()
+        {
+            AssertMinPath("AB2,BC3,CZ4", 9, "[A, B, C, Z]");
+            AssertMinPath("BC3,CZ4,AB2", 9, "[A, B, C, Z]");
+        }
+
         private void AssertMinPath(string graph, int length, string path)
         {
             var pf = MakePathFinder(graph);
