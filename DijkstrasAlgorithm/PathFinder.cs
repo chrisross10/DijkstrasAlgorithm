@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DijkstrasAlgorithm
@@ -31,12 +32,7 @@ namespace DijkstrasAlgorithm
 
         private Edge FindEdge(string begin)
         {
-            foreach (var e in _edges)
-            {
-                if (e.Begin.Equals(begin))
-                    return e;
-            }
-            return null;
+            return _edges.FirstOrDefault(e => e.Begin.Equals(begin));
         }
 
         public void AddEdge(string begin, string end, int length)

@@ -28,6 +28,8 @@ namespace DijkstrasAlgorithm.Tests
         public void TwoEdges()
         {
             AssertMinPath("AB1,BZ1", 2, "[A, B, Z]");
+            AssertMinPath("BZ1,AB1", 2, "[A, B, Z]");
+            AssertMinPath("AX1,YZ1", 0, "[]");
         }
 
         private void AssertMinPath(string graph, int length, string path)
