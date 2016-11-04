@@ -43,6 +43,7 @@ namespace DijkstrasAlgorithm.Tests
         public void OnlyOnePath()
         {
             AssertMinPath("AB1,BC2,CZ3,BD4,DE6", 6, "[A, B, C, Z]");
+            AssertMinPath("AB1,BC2,CD3,CZ3", 6, "[A, B, C, Z]");
         }
 
         private void AssertMinPath(string graph, int length, string path)
