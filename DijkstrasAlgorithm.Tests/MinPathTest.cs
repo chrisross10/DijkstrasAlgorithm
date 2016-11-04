@@ -8,7 +8,11 @@ namespace DijkstrasAlgorithm.Tests
         [Test]
         public void NoGraph_NoPathZeroLength()
         {
-            AssertMinPath("", 0, "{}");
+            AssertMinPath("", 0, "{}");     // empty graph
+            AssertMinPath("A", 0, "{}");    // one node
+            AssertMinPath("BC1", 0, "{}");  // no start or end
+            AssertMinPath("AC1", 0, "{}");  // no end
+            AssertMinPath("BZ1", 0, "{}");  // no start
         }
 
         private void AssertMinPath(string graph, int length, string path)
