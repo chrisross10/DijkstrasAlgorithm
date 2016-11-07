@@ -44,10 +44,15 @@ namespace DijkstrasAlgorithm
             foreach (var e in neighbours)
             {
                 var nbr = _nodes[e.End];
-                nbr.Length = curNode.Length + e.Length;
-                nbr.Path = new List<string>();
-                nbr.Path.AddRange(curNode.Path);
-                nbr.Path.Add(node);
+
+                var newLength = curNode.Length + e.Length;
+                if (nbr.Length > newLength)
+                {
+                    nbr.Length = newLength;
+                    nbr.Path = new List<string>();
+                    nbr.Path.AddRange(curNode.Path);
+                    nbr.Path.Add(node);
+                }
             }
         }
 
