@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -110,32 +109,6 @@ namespace DijkstrasAlgorithm
             _edges.Add(new Edge(begin, end, length));
             _nodeNames.Add(begin);
             _nodeNames.Add(end);
-        }
-
-        private class Edge
-        {
-            public readonly string Begin;
-            public readonly string End;
-            public readonly int Length;
-
-            public Edge(string begin, string end, int length)
-            {
-                this.Begin = begin;
-                this.End = end;
-                this.Length = length;
-            }
-        }
-
-        private class Node
-        {
-            public int Length;
-            public List<string> Path;
-
-            public Node(int l)
-            {
-                Length = l;
-                Path = new List<string>();
-            }
         }
     }
 }
