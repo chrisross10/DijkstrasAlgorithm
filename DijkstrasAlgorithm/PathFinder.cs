@@ -16,7 +16,7 @@ namespace DijkstrasAlgorithm
         {
             var unvisited = InitializeSearch(begin, end);
 
-            for (var node = begin; node != null; node = GetNext(unvisited))
+            for (var node = begin; node != null && !node.Equals(end); node = GetNext(unvisited))
             {
                 unvisited.Remove(node);
                 Visit(node);
@@ -67,13 +67,19 @@ namespace DijkstrasAlgorithm
 
         private string GetNext(IEnumerable<string> unvisited)
         {
+            string minNodeName = null;
+            var minLength = int.MaxValue;
+
             foreach (var name in unvisited)
             {
                 var candidate = _nodes[name];
-                if (candidate.Length != int.MaxValue)
-                    return name;
+                if (candidate.Length < minLength)
+                {
+                    minLength = candidate.Length;
+                    minNodeName = name;
+                }
             }
-            return null;
+            return minNodeName;
         }
 
         private IEnumerable<Edge> FindEdges(string begin)
